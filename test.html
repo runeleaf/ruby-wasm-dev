@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/ruby-head-wasm-wasi@0.5.0/dist/browser.script.iife.js"></script>
+    <script type="text/ruby" src="src/foo.rb"></script>
+  </head>
+  <body>
+    <h1>body</h1>
+    <button id="btn">Button</button>
+    <div id="result">result</div>
+    <script type="text/ruby">
+      require 'js'
+      @document = JS.global[:document]
+      elm = @document.getElementById 'result'
+      elm[:innerText] = 'hogehoge'
+
+      puts 'Hello World!'
+      puts Time.now.to_s
+      puts Foo.new.box
+
+      def handler
+        elm = @document.getElementById 'result'
+        elm[:innerText] = Foo.new.pick
+        puts "onclick handler #{elm[:innerText]}"
+      end
+
+      button = @document.getElementById 'btn'
+      button.addEventListener "click" do
+        handler
+      end
+    </script>
+  </body>
+</html>
